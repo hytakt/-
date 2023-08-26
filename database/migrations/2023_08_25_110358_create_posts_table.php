@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 50);
+            $table->text('body');
+            $table->string('image_path', 100)->nullable();
+            $table->integer('like_count');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
