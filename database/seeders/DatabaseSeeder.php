@@ -22,5 +22,11 @@ class DatabaseSeeder extends Seeder
         // ]);
         
         $this->call(PrefectureSeeder::class);
+        $this->call(AnimeSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(PostSeeder::class);
+        $this->call(LikeSeeder::class);
+        $this->call(BookmarkSeeder::class);
+        $this->call(CommentSeeder::class);
     }
 }
