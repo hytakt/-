@@ -19,7 +19,7 @@
             <div class="image">
                 <input type="file" name="image">
             </div>
-            <input type="submit" value="store"/>
+            <input type="submit" value="投稿"/>
         </form>
         <div class="footer">
             <a href="/posts">戻る</a>

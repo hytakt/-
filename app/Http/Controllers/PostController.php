@@ -45,5 +45,11 @@ class PostController extends Controller
     {
         return view('posts.edit')->with(['post' => $post]);
     }
+    
+    public function delete(Post $post)
+    {
+        $post->delete();
+        return redirect('/posts');
+    }
 }
 

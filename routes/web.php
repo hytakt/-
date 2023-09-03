@@ -21,6 +21,7 @@ Route::post('/posts', [PostController::class, 'store']);
 Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+Route::delete('/posts/{post}', [PostController::class, 'delete']);
 
 
 Route::get('/dashboard', function () {
