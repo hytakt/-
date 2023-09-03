@@ -32,6 +32,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Likes::class);
     }
+    
+    public function likedPosts()
+    {
+        return $this->hasMany(Post::class, 'user_id'); // 'user_id' は外部キー名
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -44,7 +49,7 @@ class User extends Authenticatable
         'password',
         'image_path',
         'bio',
-    ];
+       ];
 
     /**
      * The attributes that should be hidden for serialization.
