@@ -18,7 +18,10 @@ use App\Http\Controllers\PostController;
 Route::get('/posts', [PostController::class, 'index'])->name('index');
 Route::get('/posts/create', [PostController::class, 'create']);
 Route::post('/posts', [PostController::class, 'store']);
+Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

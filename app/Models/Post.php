@@ -11,6 +11,14 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
     
+    protected $fillable = [
+        'title',
+        'body',
+        'image_path',
+        'like_count',
+        'user_id',
+    ];
+    
     public function bookmark()
     {
         return $this->belongsTo(Bookmark::class);
@@ -41,13 +49,6 @@ class Post extends Model
         return $this->belongsToMany(Prefecture::class);
     }
     
-    protected $fillable = [
-        'title',
-        'body',
-        'image_path',
-        'like_count',
-        'user_id',
-    ];
     
     public function getPaginateByLimit(int $limit_count = 10)
     {
