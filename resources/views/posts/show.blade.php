@@ -20,6 +20,7 @@
                 <img src="{{ $post->image_path }}" alt="画像が読み込めません。"/>
             </div>
         </div>
+        <div class="edit"><a href="/posts/{{ $post->id }}/edit">編集</a></div>
         <div class="footer">
             <a href="/posts">戻る</a>
         </div>
