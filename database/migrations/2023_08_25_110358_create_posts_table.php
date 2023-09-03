@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('title', 50);
             $table->text('body');
-            $table->string('image_path', 100)->nullable();
+            $table->string('image_path')->nullable();
             $table->integer('like_count');
             $table->timestamps();
             $table->softDeletes();
