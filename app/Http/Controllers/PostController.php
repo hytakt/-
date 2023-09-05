@@ -30,7 +30,7 @@ class PostController extends Controller
         $image_path = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
         $input += ['image_path' => $image_path]; 
         if (auth()->check()) {
-        $input['user_id'] = auth()->user()->id;
+            $input['user_id'] = auth()->user()->id;
         } else {
             return redirect('/register')->with('error', 'ログインしていないため投稿できません。');
         }
@@ -44,6 +44,21 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         return view('posts.edit')->with(['post' => $post]);
+    }
+    
+    public function update(Request $request, Post $post)
+    {
+        $input = $request['post'];
+        $image_path = Cloudinary::upload($request->file('$post->image_path')->getRealPath())->getSecurePath();
+        $input += ['image_path' => $image_path]; 
+        if (auth()->check()) {
+            $input['user_id'] = auth()->user()->id;
+        } else {
+            return redirect('/register')->with('error', 'ログインしていないため投稿できません。');
+        }
+        $post->fill($input)->save();
+        
+        return redirect('/posts/' . $post->id);
     }
     
     public function delete(Post $post)
