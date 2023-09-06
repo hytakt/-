@@ -18,12 +18,16 @@
                     <h2>本文</h2>
                     <input type='text' name="post[body]" value="{{ $post->body }}">
                 </div>
-                {{ $post->image_path }}
                 <div class="content_image">
                     <img src="{{ $post->image_path }}">
-                    <input type="file" name="{{$post->image_path }}" value="{{ $post->image_path }}">
                 </div>
-                <input type='submit' value="保存">
+                <div class="form-group">
+                    <label for="image_path">新しい画像</label>
+                    <input type="file" name="new_image_path" id="new_image_path">
+                </div>
+
+                <button type="submit" class="btn btn-primary">更新</button>
+            
             </form>
         </div>
     </body>
