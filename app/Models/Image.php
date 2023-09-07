@@ -13,4 +13,9 @@ class Image extends Model
     {
         return $this->belongsTo(Post::class);
     }
+    
+    protected $fillable = [
+        'post_id',
+        'image_path'
+    ];
 }

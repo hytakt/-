@@ -17,7 +17,7 @@
                 <textarea name="post[body]" placeholder="投稿の説明の追加"></textarea>
             </div>
             <div class="image">
-                <input type="file" name="image">
+                <input type="file" name="images[]" multiple>
             </div>
             <input type="submit" value="投稿"/>
         </form>

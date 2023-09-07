@@ -17,7 +17,9 @@
                 <p>{{ $post->body }}</p>    
             </div>
             <div>
-                <img src="{{ $post->image_path }}" alt="画像が読み込めません。"/>
+                @foreach($post->images as $image)
+                    <img src="{{ $image->image_path }}" alt="画像が読み込めません。"/>
+                @endforeach
             </div>
         </div>
         <div class="edit"><a href="/posts/{{ $post->id }}/edit">編集</a></div>
