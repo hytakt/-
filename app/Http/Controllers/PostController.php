@@ -48,6 +48,7 @@ class PostController extends Controller
     
     public function update(Request $request, Post $post)
     {
+
         $input = $request->except('new_image_path');
 
         if ($request->hasFile('new_image_path')) {
