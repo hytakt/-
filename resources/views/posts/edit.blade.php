@@ -19,7 +19,7 @@
                     <input type='text' name="post[body]" value="{{ $post->body }}">
                 </div>
                 <div class="content_image">
-                    <img src="{{ $post->image_path }}">
+                    <img src="{{ $post->images()->image_path }}">
                 </div>
                 <div class="form-group">
                     <label for="image_path">新しい画像</label>

@@ -16,7 +16,9 @@
                         <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
                     </h2>
                     <p class='body'>{{ $post->body }}</p>
-                    <img src="{{ $post->image_path }}">
+                    @foreach($post->images as $image)
+                        <img src="{{ $image->image_path }}">
+                    @endforeach
                 </div>
                 <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
                     @csrf

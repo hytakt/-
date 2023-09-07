@@ -20,7 +20,6 @@ class PostSeeder extends Seeder
             'user_id' => 1,
             'title' => 'アニメ氷菓の聖地巡礼',
             'body' => 'アニメ氷菓の舞台である岐阜県高山市へ訪問しました',
-            'image_path' => 'https://www.kyotoanimation.co.jp/img/kotenbu/bgIndex.jpg',
             'like_count' => 1,
             'created_at' => new DateTime(),
             'updated_at' => new DateTime()

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Cloudinary;
 use App\Services\PostService;
+use App\Models\Image;
 
 class PostController extends Controller
 {
@@ -26,18 +27,28 @@ class PostController extends Controller
 
     public function store(Request $request, Post $post)
     {
-        $input = $request['post'];
-        $image_path = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-        $input += ['image_path' => $image_path]; 
         if (auth()->check()) {
-            $input['user_id'] = auth()->user()->id;
+            $input = $request['post'];
+            $input += ['user_id' => $request->user()->id];
+            
+            $likeCount = auth()->user()->likedPosts->count();
+            $input['like_count'] = $likeCount;
+            
+            $post->fill($input)->save();
+            
+            foreach ($request->file('images') as $upload_image){
+                $image_path = Cloudinary::upload($upload_image->getRealPath())->getSecurePath();
+                $image = new Image();
+                $image->image_path = $image_path;
+                $image->post_id = $post->id;
+                $image->save();
+            }
+            
+            
         } else {
-            return redirect('/register')->with('error', 'ログインしていないため投稿できません。');
+            return redirect('/login')->with('error', 'ログインしていないため投稿できません。');
         }
-        $likedPosts = auth()->user()->likedPosts;
-        $likeCount = $likedPosts->count();
-        $input['like_count'] = $likeCount;
-        $post->fill($input)->save();
+    
         return redirect('/posts/' . $post->id);
     }
     
@@ -60,7 +71,7 @@ class PostController extends Controller
         if (auth()->check()) {
             $input['user_id'] = auth()->user()->id;
         } else {
-            return redirect('/register')->with('error', 'ログインしていないため投稿できません。');
+            return redirect('/login')->with('error', 'ログインしていないため投稿できません。');
         }
     
         $post->fill($input)->save();
