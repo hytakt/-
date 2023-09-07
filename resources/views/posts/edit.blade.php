@@ -18,8 +18,9 @@
                     <h2>本文</h2>
                     <input type='text' name="post[body]" value="{{ $post->body }}">
                 </div>
-                <div class="content_image">
-                    <input type="file" name="image">
+                <div class="form-group">
+                    <label for="image_paths">新しい画像</label>
+                    <input type="file" name="image_paths[]" id="image_paths" multiple>
                 </div>
                 <input type='submit' value="保存">
             </form>

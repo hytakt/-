@@ -30,7 +30,7 @@ class PostController extends Controller
         $image_path = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
         $input += ['image_path' => $image_path]; 
         if (auth()->check()) {
-        $input['user_id'] = auth()->user()->id;
+            $input['user_id'] = auth()->user()->id;
         } else {
             return redirect('/register')->with('error', 'ログインしていないため投稿できません。');
         }
@@ -45,5 +45,22 @@ class PostController extends Controller
     {
         return view('posts.edit')->with(['post' => $post]);
     }
+    
+    public function update(Request $request, Post $post)
+    {
+        // 投稿の更新に関する処理
+    
+        if ($request->hasFile('image_paths')) {
+            foreach ($request->file('image_paths') as $image) {
+                // 画像をアップロードし、Image モデルに関連付けて保存
+                $imagePath = Cloudinary::upload($image->getRealPath())->getSecurePath();
+                $post->images()->create(['image_path' => $imagePath]);
+            }
+        }
+    
+        return redirect('/posts/' . $post->id);
+    }
+
+  
 }
 

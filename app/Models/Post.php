@@ -49,6 +49,11 @@ class Post extends Model
         return $this->belongsToMany(Prefecture::class);
     }
     
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+    
     
     public function getPaginateByLimit(int $limit_count = 10)
     {
