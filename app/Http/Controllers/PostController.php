@@ -59,17 +59,24 @@ class PostController extends Controller
     
     public function update(Request $request, Post $post)
     {
-
-        $input = $request->except('new_image_path');
-
-        if ($request->hasFile('new_image_path')) {
-            // 新しい画像がアップロードされた場合の処理
-            $newImagePath = Cloudinary::upload($request->file('new_image_path')->getRealPath())->getSecurePath();
-            $input['image_path'] = $newImagePath; // 新しい画像のパスを保存
-        }
-    
         if (auth()->check()) {
-            $input['user_id'] = auth()->user()->id;
+            $user = auth()->user();
+            $input = $request->only(['new_image_path']);
+            
+            $input['user_id'] = $user->id;
+            
+            $post->fill($input)->save();
+            
+            if($request->hasFile('new_image')){
+                foreach($request->file('new_image') as $upload_new_image){
+                    $new_image_path = Cloudinary::upload($upload_new_image->getRealPath())->getSecurePath();
+                    $new_image = new Image();
+                    $new_image->image_path = $new_image_path;
+                    $new_image->post_id = $post->id;
+                    $new_image->save();
+                }
+            }
+            
         } else {
             return redirect('/login')->with('error', 'ログインしていないため投稿できません。');
         }

@@ -19,14 +19,17 @@
                     <input type='text' name="post[body]" value="{{ $post->body }}">
                 </div>
                 <div class="content_image">
-                    <img src="{{ $post->images()->image_path }}">
+                    @foreach($post->images as $image)
+                        <img src="{{ $image->image_path }}">
+                    @endforeach
                 </div>
                 <div class="form-group">
                     <label for="image_path">新しい画像</label>
-                    <input type="file" name="new_image_path" id="new_image_path">
+                    <input type="file" name="new_image[]" id="new_image_path" multiple>
                 </div>
 
                 <button type="submit" class="btn btn-primary">更新</button>
+                <a href="/posts/{{ $post->id }}">戻る</a>
             
             </form>
         </div>

@@ -15,13 +15,15 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/posts', [PostController::class, 'index'])->name('index');
-Route::get('/posts/create', [PostController::class, 'create']);
-Route::post('/posts', [PostController::class, 'store']);
-Route::put('/posts/{post}', [PostController::class, 'update']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
-Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
-Route::delete('/posts/{post}', [PostController::class, 'delete']);
+Route::controller(PostController::class)->middleware(['auth'])->group(function(){
+    Route::get('/posts', 'index')->name('index');
+    Route::get('/posts/create', 'create')->name('create');
+    Route::post('/posts', 'store')->name('store');
+    Route::put('/posts/{post}', 'update')->name('update');
+    Route::get('/posts/{post}', 'show')->name('show');
+    Route::get('/posts/{post}/edit', 'edit')->name('edit');
+    Route::delete('/posts/{post}', 'delete')->name('delete');
+});
 
 
 Route::get('/dashboard', function () {
