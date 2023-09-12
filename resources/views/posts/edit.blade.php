@@ -21,6 +21,11 @@
                 <div class="content_image">
                     @foreach($post->images as $image)
                         <img src="{{ $image->image_path }}">
+                        <form action="{{ route('images.destroy', ['image' => $image->id]) }}" id="form_{{ $image->id }}" method='post'>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">削除</button>
+                        </form>
                     @endforeach
                 </div>
                 <div class="form-group">
