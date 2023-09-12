@@ -12,26 +12,17 @@ class ImageController extends Controller
 {
    
 
-    public function destroy(Request $request, Image $image)
+    public function destroy($image)
     {
-        // CloudinaryのパブリックIDを取得
-        $publicId = pathinfo($image->image_path, PATHINFO_FILENAME);
-    
-        // Cloudinaryから画像を削除
-        try {
-            $result = Uploader::destroy($publicId);
-    
-            // 削除が成功した場合
-            if ($result["result"] === "ok") {
-                // データベースから画像を削除
-                $image->delete();
-                return redirect()->back()->with('success', '画像が削除されました。');
-            } else {
-                return redirect()->back()->with('error', 'Cloudinaryで画像を削除できませんでした。');
-            }
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', '画像の削除中にエラーが発生しました。');
+        $imageModel = Image::find($image);
+        if (!$imageModel) {
+            return back()->with('error', '画像が見つかりませんでした。');
         }
+        
+        $imagePath = $imageModel->image_path;
+        $imageModel->delete();
+    
+            return redirect()->back()->with('success', '画像が削除されました。');
     }
 
 }

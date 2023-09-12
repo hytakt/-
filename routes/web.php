@@ -26,7 +26,7 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::delete('/posts/{post}', 'delete')->name('delete');
 });
 
-Route::delete('/images/{image}', 'ImageController@destroy')->name('images.destroy');
+Route::delete('/images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
