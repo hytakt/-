@@ -3,28 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Cloudinary;
+use App\Http\Controllers\Controller;
 use App\Models\Image;
-use App\Models\Post;
+use Illuminate\Support\Facades\Redirect;
+use Cloudinary\Uploader;
 
 class ImageController extends Controller
 {
-    public function destroy($image)
+   
+
+    public function destroy(Request $request, Image $image)
     {
-        // 画像をデータベースから削除
-        $imageModel = Image::find($image);
-        if (!$imageModel) {
-            return back()->with('error', '画像が見つかりませんでした。');
+        // CloudinaryのパブリックIDを取得
+        $publicId = pathinfo($image->image_path, PATHINFO_FILENAME);
+    
+        // Cloudinaryから画像を削除
+        try {
+            $result = Uploader::destroy($publicId);
+    
+            // 削除が成功した場合
+            if ($result["result"] === "ok") {
+                // データベースから画像を削除
+                $image->delete();
+                return redirect()->back()->with('success', '画像が削除されました。');
+            } else {
+                return redirect()->back()->with('error', 'Cloudinaryで画像を削除できませんでした。');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', '画像の削除中にエラーが発生しました。');
         }
-    
-        $imagePath = $imageModel->image_path;
-        $imageModel->delete();
-    
-        // Cloudinaryなどのストレージから画像を削除
-        // この部分はCloudinary APIなどのストレージに応じてカスタマイズが必要です
-    
-        // 削除が成功したらリダイレクト
-        return redirect()->back()->with('success', '画像が削除されました。');
     }
+
 }
 
