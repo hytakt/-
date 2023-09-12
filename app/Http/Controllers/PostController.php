@@ -60,8 +60,8 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         if (auth()->check()) {
-            $user = auth()->user();
             $input = $request->only(['new_image_path']);
+            $user = auth()->user();
             
             $input['user_id'] = $user->id;
             

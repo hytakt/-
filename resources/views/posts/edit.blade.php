@@ -21,7 +21,7 @@
                 <div class="content_image">
                     @foreach($post->images as $image)
                         <img src="{{ $image->image_path }}">
-                        <form action="{{ route('images.destroy', ['image' => $image->id]) }}" id="form_{{ $image->id }}" method='post'>
+                        <form action="/posts/{{ $image->id }}" id="form_{{ $image->id }}" method='post'>
                             @csrf
                             @method('DELETE')
                             <button type="submit">削除</button>
@@ -29,7 +29,7 @@
                     @endforeach
                 </div>
                 <div class="form-group">
-                    <label for="image_path">新しい画像</label>
+                    <label for="new_image_path">新しい画像</label>
                     <input type="file" name="new_image[]" id="new_image_path" multiple>
                 </div>
 
@@ -38,5 +38,14 @@
             
             </form>
         </div>
+                <script>
+                    function deleteImage(id) {
+                        'use strict'
+                
+                        if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                            document.getElementById(`form_${id}`).submit();
+                        }
+                    }
+                </script>
     </body>
 </html>
