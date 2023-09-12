@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::delete('/posts/{post}', 'delete')->name('delete');
 });
 
+Route::delete('/images/{image}', 'ImageController@destroy')->name('images.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
