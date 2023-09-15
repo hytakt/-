@@ -25,17 +25,27 @@ class User extends Authenticatable
     
     public function bookmarks()
     {
-        return $this->hasMany(Bookmarks::class);
+        return $this->hasMany(Bookmark::class);
     }
     
     public function likes()
     {
-        return $this->hasMany(Likes::class);
+        return $this->hasMany(Like::class);
     }
     
     public function likedPosts()
     {
         return $this->hasMany(Post::class, 'user_id'); // 'user_id' は外部キー名
+    }
+    
+    public function bookmark_posts()
+    {
+        return $this->belongsToMany(Post::class, 'bookmarks', 'user_id', 'post_id');
+    }
+    
+    public function is_bookmark($postId)
+    {
+        return $this->bookmarks()->where('post_id', $postId)->exists();
     }
 
     /**
