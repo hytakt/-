@@ -20,12 +20,9 @@
                 </div>
                 <div class="content_image">
                     @foreach($post->images as $image)
-                        <img src="{{ $image->image_path }}">
-                        <form action="/posts/{{ $image->id }}" id="form_{{ $image->id }}" method='post'>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">削除</button>
-                        </form>
+                        <img id="form_{{$image->id }}" src="{{ $image->image_path }}">
+                        <label for="imageDelete">削除</label>
+                        <input type="checkbox" name="imagesDelete[]" id="{{ $image->imagepath }}" value="削除">
                     @endforeach
                 </div>
                 <div class="form-group">
@@ -40,11 +37,9 @@
         </div>
                 <script>
                     function deleteImage(id) {
-                        'use strict'
-                
-                        if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
-                            document.getElementById(`form_${id}`).submit();
-                        }
+                        var previewImage = document.getElementById(`form_${id});
+                        
+                        previewImage.src = "";
                     }
                 </script>
     </body>
