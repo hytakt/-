@@ -1,24 +1,29 @@
-<!DOCTYPE HTML>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Posts</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    </head>
+    <x-app-layout>
     <body>
         <h1 class="title">
             {{ $post->title }}
         </h1>
         <div class="content">
             <div class="content__post">
-                <h3>本文</h3>
+                <h2>投稿の説明</h2>
                 <p>{{ $post->body }}</p>    
             </div>
             <div>
                 @foreach($post->images as $image)
                     <img src="{{ $image->image_path }}" alt="画像が読み込めません。"/>
+                @endforeach
+            </div>
+            <form action="{{ route('comment', ['post' => $post->id]) }}" method="POST">
+                @csrf
+                <div class="create_comment">
+                    <textarea name="comments[comment]" placeholder="コメント入力"></textarea>
+                </div>
+                <input type="submit" value="コメント送信">
+            </form>
+            <div>
+                <h3>コメント一覧</h3>
+                @foreach($post->comments as $comment)
+                    <p>{{ $comment->comment }}</p>
                 @endforeach
             </div>
         </div>
@@ -27,4 +32,4 @@
             <a href="/posts">戻る</a>
         </div>
     </body>
-</html>
+    </x-app-layout>

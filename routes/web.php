@@ -18,23 +18,26 @@ use App\Http\Controllers\BookmarkController;
 |
 */
 
+
+
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
-    Route::get('/posts', 'index')->name('index');
+    Route::get('/posts', 'index')->middleware(['auth', 'verified'])->name('index');
     Route::get('/posts/create', 'create')->name('create');
+    Route::get('/mypage', 'mypageIndex')->name('mypageIndex');
     Route::post('/posts', 'store')->name('store');
     Route::put('/posts/{post}', 'update')->name('update');
     Route::get('/posts/{post}', 'show')->name('show');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::post('/posts/like', [PostController::class, 'like'])->name('posts.like');
     Route::get('/bookmarks', [PostPostController::class, 'bookmark_articles'])->name('bookmarks');
-    Route::resource('/articles', PostPostController::class);
+    Route::post('/posts/{post}', 'comment')->name('comment');
     Route::delete('/posts/{post}', 'delete')->name('delete');
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    // Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::post('/articles/{article}/bookmark', [BookmarkController::class, 'store'])->name('bookmark.store');
-    Route::delete('/articles/{article}/unbookmark', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
+    Route::post('/posts/{post}/bookmark', [BookmarkController::class, 'store'])->name('bookmark.store');
+    Route::delete('/posts/{post}/unbookmark', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
+    Route::get('/bookmark', [BookmarkController::class, 'bookmarkIndex'])->name('bookmark.index');
 });
 
 Route::put('/images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
