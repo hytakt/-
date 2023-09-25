@@ -9,6 +9,7 @@ use App\Services\PostService;
 use App\Models\Image;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -28,6 +29,34 @@ class PostController extends Controller
    public function create()
     {
         return view('posts.create');  
+    }
+    
+    public function comment(Request $request, Post $post)
+    {
+        // リクエストからコメントのデータを取得
+        $input = $request->input('comments');
+        $commentText = $input['comment'];
+    
+        // コメントが空でないことを検証
+        if (!empty($commentText)) {
+            // コメントが空でない場合、コメントを保存
+            $comment = new Comment();
+            $comment->comment = $commentText;
+            $comment->user_id = $request->user()->id;
+            $comment->post_id = $post->id;
+            $comment->save();
+        }
+    
+        return view('posts.show')->with(['post' => $post]);
+    }
+    
+    public function mypageIndex()
+    {
+        $posts = \Auth::user()->posts()->orderBy('created_at', 'desc')->paginate(10);
+        $data = [
+            'posts' => $posts,
+        ];
+        return view('posts.mypage', $data);
     }
 
     public function store(Request $request, Post $post)
@@ -59,10 +88,7 @@ class PostController extends Controller
     
     public function edit(Request $request, Post $post)
     {
-        $images_delete = $request->input('imagesDelete', []);
-        foreach ($images_delete as $delete){
-            Image::where('image_path', $delete)->delete();
-    }
+        
         return view('posts.edit')->with(['post' => $post]);
     }
     
@@ -71,6 +97,14 @@ class PostController extends Controller
         if (auth()->check()) {
             $input = $request->only(['new_image_path']);
             $user = auth()->user();
+            
+            $images_delete = $request->input('imagesDelete');
+            // dd($images_delete);
+            foreach ($images_delete as $delete){
+                // dd($delete);
+                Image::where('id', $delete)->delete();
+            }
+            
             
             $input['user_id'] = $user->id;
             
@@ -135,4 +169,3 @@ class PostController extends Controller
         return view('posts.bookmarks', $data);
     }
 }
-

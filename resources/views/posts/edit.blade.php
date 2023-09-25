@@ -22,7 +22,7 @@
                     @foreach($post->images as $image)
                         <img id="form_{{$image->id }}" src="{{ $image->image_path }}">
                         <label for="imageDelete">削除</label>
-                        <input type="checkbox" name="imagesDelete[]" id="{{ $image->imagepath }}" value="削除">
+                        <input type="checkbox" name="imagesDelete[]" id="{{ $image->imagepath }}" value="{{ $image->id }}">
                     @endforeach
                 </div>
                 <div class="form-group">

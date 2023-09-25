@@ -13,10 +13,16 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('あいお') }}
                     </x-nav-link>
                     <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                        {{ __('Index') }}
+                        {{ __('投稿一覧') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('mypageIndex')" :active="request()->routeIs('mypageIndex')">
+                        {{ __('マイページ') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                        {{ __('投稿作成') }}
                     </x-nav-link>
                 </div>
             </div>
