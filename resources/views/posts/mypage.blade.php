@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <x-app-layout>
     <body>
         <h1 class="page-heading">マイページ</h1>
@@ -16,4 +14,4 @@
         </div>
     </body>
     </x-app-layout>
-</html>
+

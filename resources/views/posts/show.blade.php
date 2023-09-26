@@ -1,5 +1,4 @@
     <x-app-layout>
-    <body>
         <h1 class="title">
             {{ $post->title }}
         </h1>
@@ -21,7 +20,7 @@
                 <input type="submit" value="コメント送信">
             </form>
             <div>
-                <h3>コメント一覧</h3>
+                <h3>【コメント一覧】</h3>
                 @foreach($post->comments as $comment)
                     <p>{{ $comment->comment }}</p>
                 @endforeach
@@ -31,5 +30,4 @@
         <div class="footer">
             <a href="/posts">戻る</a>
         </div>
-    </body>
     </x-app-layout>

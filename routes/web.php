@@ -28,8 +28,8 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::put('/posts/{post}', 'update')->name('update');
     Route::get('/posts/{post}', 'show')->name('show');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
-    Route::post('/posts/like', [PostController::class, 'like'])->name('posts.like');
-    Route::get('/bookmarks', [PostPostController::class, 'bookmark_articles'])->name('bookmarks');
+    Route::post('/posts/like', 'like')->name('posts.like');
+    Route::get('/bookmarks', 'bookmark_articles')->name('bookmarks');
     Route::post('/posts/{post}', 'comment')->name('comment');
     Route::delete('/posts/{post}', 'delete')->name('delete');
 });
