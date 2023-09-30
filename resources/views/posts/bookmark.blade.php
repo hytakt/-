@@ -1,17 +1,23 @@
     <x-app-layout>
-    <body>
-        @section('content')
-        <h1 class="page-heading">ブックマークした記事</h1>
-        <dev class="bookmarks">
+    <x-slot name="header">
+        <h1 class="text-4xl font-semibold">ブックマークした記事</h1>
+    </x-slot>
+
+    <div class="px-4 py-2">
+        <div class="space-y-4">
             @foreach($bookmarks as $bookmark)
-                <dl>
-                    <dt><a href="/posts/{{ $bookmark->post_id }}">{{ $bookmark->post->title }}</a></dt>
-                    <dd><div class="bookmark_post-info">{{ $bookmark->post->created_at }}｜{{ $bookmark->user->name }}</div></dd>
-                </dl>
+                <div class="bg-white rounded-lg p-4 shadow-md">
+                    <a href="/posts/{{ $bookmark->post_id }}" class="text-xl font-semibold text-indigo-600 hover:underline">{{ $bookmark->post->title }}</a>
+                    <div class="text-gray-600 text-sm mt-1">
+                        {{ $bookmark->post->created_at }}｜{{ $bookmark->user->name }}
+                    </div>
+                </div>
             @endforeach
-        </dev>
-        <div class="footer">
-            <!--<a href="/posts">戻る</a>-->
         </div>
-    </body>
-    </x-app-layout>
+    </div>
+
+    <div class="mt-4">
+        <!-- <a href="/posts" class="text-indigo-500 hover:underline">戻る</a> -->
+    </div>
+</x-app-layout>
+

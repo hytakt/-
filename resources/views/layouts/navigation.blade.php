@@ -24,6 +24,10 @@
                     <x-nav-link :href="route('create')" :active="request()->routeIs('create')">
                         {{ __('投稿作成') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('search.Index')" :active="request()->routeIs('search.Index')">
+                        {{ __('都道府県から検索') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
 

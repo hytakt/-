@@ -10,15 +10,22 @@ use App\Models\Image;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
+use App\Models\Prefecture;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
     public function index(Post $post)
     {
         $user = auth()->user();
-    $posts = Post::withCount('likes')->orderByDesc('updated_at')->get();
-    return view('posts.index', ['posts' => $posts])->with(['posts' => $post->getPaginateByLimit()]);
-        // return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
+        $posts = Post::query()
+            ->with(['user', 'likes', 'comments','prefectures'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
+        
+        return view('posts.index')->with(['posts' => $posts]);
     }
     
     public function show(Post $post)
@@ -28,7 +35,15 @@ class PostController extends Controller
     
    public function create()
     {
-        return view('posts.create');  
+        $prefecures = Prefecture::all();
+
+        $user = Auth::user();
+
+        $data = [
+            'user' => $user
+        ];
+
+        return view('posts.create', $data)->with(['prefectures' => $prefecures]);  
     }
     
     public function comment(Request $request, Post $post)
@@ -68,7 +83,10 @@ class PostController extends Controller
             $likeCount = auth()->user()->likedPosts->count();
             $input['like_count'] = $likeCount;
             
+            
             $post->fill($input)->save();
+            
+            $post->prefectures()->attach($request->prefectures);
             
             foreach ($request->file('images') as $upload_image){
                 $image_path = Cloudinary::upload($upload_image->getRealPath())->getSecurePath();
@@ -99,9 +117,7 @@ class PostController extends Controller
             $user = auth()->user();
             
             $images_delete = $request->input('imagesDelete');
-            // dd($images_delete);
             foreach ($images_delete as $delete){
-                // dd($delete);
                 Image::where('id', $delete)->delete();
             }
             
@@ -131,27 +147,24 @@ class PostController extends Controller
     
     public function like(Request $request)
     {
-        $user_id = Auth::user()->id; // ログインしているユーザーのidを取得
-        $post_id = $request->post_id; // 投稿のidを取得
+        $user_id = Auth::user()->id; 
+        $post_id = $request->post_id; 
     
-        // すでにいいねがされているか判定するためにlikesテーブルから1件取得
         $already_liked = Like::where('user_id', $user_id)->where('post_id', $post_id)->first(); 
     
         if (!$already_liked) { 
-            $like = new Like; // Likeクラスのインスタンスを作成
+            $like = new Like; 
             $like->post_id = $post_id;
             $like->user_id = $user_id;
             $like->save();
         } else {
-            // 既にいいねしてたらdelete 
             Like::where('post_id', $post_id)->where('user_id', $user_id)->delete();
         }
-        // 投稿のいいね数を取得
         $post_likes_count = Post::withCount('likes')->findOrFail($post_id)->likes_count;
         $param = [
             'post_likes_count' => $post_likes_count,
         ];
-        return response()->json($param); // JSONデータをjQueryに返す
+        return response()->json($param); 
     }
     
     public function delete(Post $post)
@@ -163,9 +176,38 @@ class PostController extends Controller
     public function bookmark_posts()
     {
         $posts = \Auth::user()->bookmark_posts()->orderBy('created_at', 'desc')->paginate(10);
-        $data = [
-            'posts' => $posts,
-        ];
-        return view('posts.bookmarks', $data);
+    
+        return view('posts.bookmark', ['bookmarks' => $posts]);
+    }
+    
+    public function searchIndex(Prefecture $prefecture)
+    {
+        $prefectures = $prefecture->get();
+        
+        
+        return view('posts.search')->with(['prefectures' => $prefectures]);
+    }
+    
+     public function search(Request $request, Prefecture $prefecture)
+    {
+        $input = $request->input('pref'); 
+        
+        $result_prefecture = Prefecture::find($request["pref"]);
+        
+        $prefectures = $prefecture->get();
+        
+        return view('posts.result')->with(['result' => $result_prefecture, 'prefectures' => $prefectures]);
+    }
+    
+    public function prefecture($id)
+    {
+        $only_pref = Prefecture::find($id);
+        
+        return view('prefectures.result')->with(['only_pref' => $only_pref]);
+    }
+    
+    public function map()
+    {
+        return view('posts.map');
     }
 }

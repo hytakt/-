@@ -62,4 +62,30 @@ class Post extends Model
     {
         return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
+    
+    public function getPrefNameAttribute()
+    {
+        return config('pref.' . $this->pref_id);
+    }
+
+    public function searchFilter($query, string $search = null)
+    {
+        if (!$search) {
+            return $query;
+        }
+
+        return $query->where('title', 'LIKE', "%{$search}%")
+        ->orWhere('body', 'LIKE', "%{$search}%");
+    }
+
+    public function prefFilter($query, string $pref = null)
+    {
+        if (!$pref) {
+            return $query;
+        }
+        
+        
+
+        return $query->Prefecture::where('id', $pref);
+    }
 }
