@@ -24,20 +24,23 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::get('/posts', 'index')->middleware(['auth', 'verified'])->name('index');
     Route::get('/posts/create', 'create')->name('create');
     Route::get('/mypage', 'mypageIndex')->name('mypageIndex');
-    Route::post('/posts', 'store')->name('store');
+    Route::post('/posts/like', 'like')->name('posts.like');
+    Route::post('/posts', 'store')->name('posts.store');
     Route::put('/posts/{post}', 'update')->name('update');
     Route::get('/posts/{post}', 'show')->name('show');
-    Route::get('/posts/{post}/edit', 'edit')->name('edit');
-    Route::post('/posts/like', [PostController::class, 'like'])->name('posts.like');
-    Route::get('/bookmarks', [PostPostController::class, 'bookmark_articles'])->name('bookmarks');
     Route::post('/posts/{post}', 'comment')->name('comment');
+    Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::delete('/posts/{post}', 'delete')->name('delete');
+    Route::get('/searchIndex', 'searchIndex')->name('search.Index');
+    Route::get('/search', 'search')->name('search');
+    Route::get('/prefecture/{id}', 'prefecture')->name('prefecture');
+    Route::get('/map', 'map')->name('map');
 });
 
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/posts/{post}/bookmark', [BookmarkController::class, 'store'])->name('bookmark.store');
     Route::delete('/posts/{post}/unbookmark', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
-    Route::get('/bookmark', [BookmarkController::class, 'bookmarkIndex'])->name('bookmark.index');
+    Route::get('/bookmarks', [BookmarkController::class, 'bookmarkIndex'])->name('bookmark.index');
 });
 
 Route::put('/images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
