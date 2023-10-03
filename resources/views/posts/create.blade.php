@@ -37,7 +37,7 @@
         </form>
 
         <div class="mt-4">
-            <a href="/posts" class="text-indigo-500 hover:underline">戻る</a>
+            <a href="/" class="text-indigo-500 hover:underline">戻る</a>
         </div>
     </div>
 </x-app-layout>

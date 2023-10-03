@@ -11,11 +11,13 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/build/assets/public/build/assets/app-78b6d505.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('/build/assets/public/build/assets/map-f2ed8a0a.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/map.js','resources/css/map.css'])
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="{{ asset('/build/assets/public/build/assets/app-ba649198.js') }}"></script>
         <script src="{{ asset('/build/assets/public/build/assets/map-bd181ec9.js') }}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config("services.google-map.apikey") }}&callback=initAutocomplete&libraries=places&v=weekly"defer></script>
     </head>

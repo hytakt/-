@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('あいお') }}
+                        {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
                         {{ __('投稿一覧') }}
@@ -26,6 +26,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('search.Index')" :active="request()->routeIs('search.Index')">
                         {{ __('都道府県から検索') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('map')" :active="request()->routeIs('map')">
+                        {{ __('GoogleMapはこちら！') }}
                     </x-nav-link>
                     
                 </div>
