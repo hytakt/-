@@ -21,7 +21,7 @@ use App\Http\Controllers\BookmarkController;
 
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
-    Route::get('/posts', 'index')->middleware(['auth', 'verified'])->name('index');
+    Route::get('/', 'index')->middleware(['auth', 'verified'])->name('index');
     Route::get('/posts/create', 'create')->name('create');
     Route::get('/mypage', 'mypageIndex')->name('mypageIndex');
     Route::post('/posts/like', 'like')->name('posts.like');
@@ -29,8 +29,9 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::put('/posts/{post}', 'update')->name('update');
     Route::get('/posts/{post}', 'show')->name('show');
     Route::post('/posts/{post}', 'comment')->name('comment');
-    Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::delete('/posts/{post}', 'delete')->name('delete');
+    Route::get('/posts/{post}/edit', 'edit')->name('edit');
+    // Route::delete('/posts/{post}', 'delete')->name('delete');
     Route::get('/searchIndex', 'searchIndex')->name('search.Index');
     Route::get('/search', 'search')->name('search');
     Route::get('/prefecture/{id}', 'prefecture')->name('prefecture');

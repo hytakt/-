@@ -18,7 +18,7 @@
                     @if ($post->prefecture_id !== 0)
                         <div class="mt-2">
                             @foreach ($post->prefectures as $prefecture)
-                                <a href="{{ route('search.Index', ['prefectures' => $post->prefectures]) }}" class="text-gray-400">
+                                <a href="/prefecture/{{$prefecture->id}}" class="text-gray-400">
                                     <i class="fas fa-map-marker-alt mr-1"></i>{{ $prefecture->prefecture }}
                                 </a>
                             @endforeach
@@ -72,4 +72,13 @@
     <div class="mt-8">
         {{ $posts->links() }}
     </div>
+    <script>
+            function deletePost(id) {
+                'use strict'
+        
+                if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+        </script>
 </x-app-layout>
