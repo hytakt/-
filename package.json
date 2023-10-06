@@ -123,12 +123,12 @@
   "bugs": {
     "url": "https://github.com/hytakt/-/issues"
   },
-  "homepage": "https://github.com/hytakt/-#readme"
+  "homepage": "https://github.com/hytakt/-#readme",
   "scripts": {
         "dev": "vite",
         "build": "vite build", 
         "heroku-postbuild": "npm run build"
-    },
+    }
   
 }
 
