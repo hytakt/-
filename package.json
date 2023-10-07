@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.2",
@@ -123,12 +124,6 @@
   "bugs": {
     "url": "https://github.com/hytakt/-/issues"
   },
-  "homepage": "https://github.com/hytakt/-#readme",
-  "scripts": {
-        "dev": "vite",
-        "build": "vite build", 
-        "heroku-postbuild": "npm run build"
-    }
-  
+  "homepage": "https://github.com/hytakt/-#readme"
 }
 
