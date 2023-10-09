@@ -42,7 +42,7 @@
     <div class="mt-4">
         <div class="edit"><a href="/posts/{{ $post->id }}/edit" class="text-indigo-500 hover:underline">編集</a></div>
         <div class="footer">
-            <a href="/posts" class="text-indigo-500 hover:underline">戻る</a>
+            <a href="/" class="text-indigo-500 hover:underline">戻る</a>
         </div>
     </div>
 </x-app-layout>

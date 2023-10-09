@@ -21,7 +21,7 @@ use App\Http\Controllers\BookmarkController;
 
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
-    Route::get('/posts', 'index')->middleware(['auth', 'verified'])->name('index');
+    Route::get('/', 'index')->middleware(['auth', 'verified'])->name('index');
     Route::get('/posts/create', 'create')->name('create');
     Route::get('/mypage', 'mypageIndex')->name('mypageIndex');
     Route::post('/posts/like', 'like')->name('posts.like');
