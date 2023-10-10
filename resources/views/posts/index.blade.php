@@ -13,7 +13,11 @@
                         <h3 class="text-gray-600">{{ $post->user->name }}</h3>
                     </div>
                     <div class="mt-4 relative rounded overflow-hidden shadow-md">
+                        @if (count($post->images) > 0)
                         <img src="{{ $post->images[0]->image_path }}" class="w-full">
+                        @else
+                            <p>No image available</p> <!-- 画像が存在しない場合のメッセージを表示 -->
+                        @endif
                     </div>
                     @if ($post->prefecture_id !== 0)
                         <div class="mt-2">
