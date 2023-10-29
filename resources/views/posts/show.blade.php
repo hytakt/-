@@ -30,6 +30,7 @@
                         @foreach($post->comments as $key => $comment)
                             <li class="{{ $key % 2 === 0 ? 'bg-white' : 'bg-gray-200' }} p-2 rounded-lg mb-2">
                                 {{ $comment->comment }}
+                                {{ $comment->created_at }}
                             </li>
                         @endforeach
                     </ul>

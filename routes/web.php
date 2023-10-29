@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\YoutubeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,8 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::put('/images/{image}', [ImageController::class, 'destroy'])->name('images.destroy');
+Route::get('/youtube', [YoutubeController::class, 'index'])->name('youtube');
+Route::get('/youtube/search', [YoutubeController::class, 'search_videos'])->name('search_video');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
