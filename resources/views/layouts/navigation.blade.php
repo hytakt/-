@@ -30,6 +30,9 @@
                     <x-nav-link :href="route('map')" :active="request()->routeIs('map')">
                         {{ __('GoogleMapはこちら！') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('youtube')" :active="request()->routeIs('youtube^')">
+                        {{ __('Youtube検索はこちら！') }}
+                    </x-nav-link>
                     
                 </div>
             </div>
